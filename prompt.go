@@ -45,12 +45,10 @@ func Clear() {
 	cmd := new(exec.Cmd)
 	if runtime.GOOS == "windows" {
 		cmd = exec.Command("cmd", "/c", "cls")
-	} else if runtime.GOOS == "linux" {
-		cmd = exec.Command("clear")
 	} else {
-		log.Printf("Cannot clear console, OS unsupported: %s", runtime.GOOS)
-		return
+		cmd = exec.Command("clear")
 	}
+
 	cmd.Stdout = os.Stdout
 	cmd.Run()
 	cmd.Wait()
