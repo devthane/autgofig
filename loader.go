@@ -27,8 +27,7 @@ func NewLoader(fields []string, name string) *Loader {
 	if runtime.GOOS == "windows" {
 		l.Separator = "\\"
 		l.confLocation = os.Getenv("userprofile") + l.Separator + l.name + ".yml"
-	}
-	if runtime.GOOS == "linux" {
+	} else {
 		l.Separator = "/"
 		l.confLocation = os.Getenv("HOME") + l.Separator + l.name + ".yml"
 	}
