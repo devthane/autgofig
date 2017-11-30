@@ -2,6 +2,48 @@
 
 
 [[projects]]
+  branch = "master"
+  name = "github.com/chzyer/readline"
+  packages = ["."]
+  revision = "a4d5111b617813c5d09df1ba6d76394ed71b1644"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/juju/ansiterm"
+  packages = [".","tabwriter"]
+  revision = "35c59b9e0fe275705a71bf5d58ee293f27efbbc4"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/lunixbochs/vtclean"
+  packages = ["."]
+  revision = "d14193dfc626125c831501c1c42340b4248e1f5a"
+
+[[projects]]
+  name = "github.com/manifoldco/promptui"
+  packages = [".","list","screenbuf"]
+  revision = "3325f5fcbce567f6c36fe4899b67c1f597453792"
+  version = "v0.2.0"
+
+[[projects]]
+  name = "github.com/mattn/go-colorable"
+  packages = ["."]
+  revision = "167de6bfdfba052fa6b2d3664c8f5272e23c9072"
+  version = "v0.0.9"
+
+[[projects]]
+  name = "github.com/mattn/go-isatty"
+  packages = ["."]
+  revision = "0360b2af4f38e8d38c7fce2a9f4e702702d73a39"
+  version = "v0.0.3"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/sys"
+  packages = ["unix"]
+  revision = "13fcbd661c8ececa8807a29b48407d674b1d8ed8"
+
+[[projects]]
   branch = "v2"
   name = "gopkg.in/yaml.v2"
   packages = ["."]
@@ -10,6 +52,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "c39e9119cc91080f9178c39214d6ca06156205351dec2523319554ee3669537e"
+  inputs-digest = "6f1e9df476e6e5f908df0b9f88727faff6968fb8aa311a6d436fd0ce8d5ea2fe"
   solver-name = "gps-cdcl"
   solver-version = 1
