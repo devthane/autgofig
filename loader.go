@@ -11,11 +11,12 @@ import (
 )
 
 type Loader struct {
-	confLocation string
+	ConfLocation string
 	Separator    string
 	Config       *Config
 	fields       []string
 	name         string
+	HomeDir      string
 }
 
 func NewLoader(fields []string, name string) *Loader {
@@ -26,10 +27,12 @@ func NewLoader(fields []string, name string) *Loader {
 
 	if runtime.GOOS == "windows" {
 		l.Separator = "\\"
-		l.confLocation = os.Getenv("userprofile") + l.Separator + l.name + ".yml"
+		l.HomeDir = os.Getenv("userprofile")
+		l.ConfLocation = l.HomeDir + l.Separator + l.name + ".yml"
 	} else {
 		l.Separator = "/"
-		l.confLocation = os.Getenv("HOME") + l.Separator + l.name + ".yml"
+		l.HomeDir = os.Getenv("HOME")
+		l.ConfLocation = l.HomeDir + l.Separator + l.name + ".yml"
 	}
 
 	l.loadConfig()
@@ -39,11 +42,11 @@ func NewLoader(fields []string, name string) *Loader {
 
 func (l *Loader) loadConfig() {
 	data := make([]byte, 2048)
-	data, err := ioutil.ReadFile(l.confLocation)
+	data, err := ioutil.ReadFile(l.ConfLocation)
 	if err != nil {
-		f, err := os.Create(l.confLocation)
+		f, err := os.Create(l.ConfLocation)
 		if err != nil {
-			log.Panicf("ERR: could not read file: %s", l.confLocation)
+			log.Panicf("ERR: could not read file: %s", l.ConfLocation)
 		}
 		defer f.Close()
 		f.Read(data)
@@ -78,7 +81,7 @@ func (l *Loader) writeRawConfig(m map[string]string) {
 		log.Fatalln("ERR: Could not prepare Config for write.", err)
 	}
 
-	file, err := os.Create(l.confLocation)
+	file, err := os.Create(l.ConfLocation)
 	if err != nil {
 		log.Fatalln("ERR: could not open Config file for writing.", err)
 	}
