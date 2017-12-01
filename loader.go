@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"log"
 	"bufio"
+	"github.com/manifoldco/promptui"
 )
 
 type Loader struct {
@@ -67,7 +68,16 @@ func (l *Loader) configure(c *Config) {
 	Clear()
 	for field, value := range mutatingRawConfig {
 		if value == "" {
-			mutatingRawConfig[field] = Input(field)
+			prompt := promptui.Prompt{
+				Label: field,
+			}
+
+			result, err := prompt.Run()
+			if err != nil {
+				panic(err)
+			}
+
+			mutatingRawConfig[field] = result
 		}
 	}
 
