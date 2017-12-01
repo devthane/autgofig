@@ -20,10 +20,10 @@
   revision = "d14193dfc626125c831501c1c42340b4248e1f5a"
 
 [[projects]]
+  branch = "windows-keycodes"
   name = "github.com/manifoldco/promptui"
   packages = [".","list","screenbuf"]
-  revision = "3325f5fcbce567f6c36fe4899b67c1f597453792"
-  version = "v0.2.0"
+  revision = "952bd7eaeed03711f45e8df4572fcda2dea8dd35"
 
 [[projects]]
   name = "github.com/mattn/go-colorable"
@@ -41,7 +41,7 @@
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "13fcbd661c8ececa8807a29b48407d674b1d8ed8"
+  revision = "8b4580aae2a0dd0c231a45d3ccb8434ff533b840"
 
 [[projects]]
   branch = "v2"
@@ -52,6 +52,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "6f1e9df476e6e5f908df0b9f88727faff6968fb8aa311a6d436fd0ce8d5ea2fe"
+  inputs-digest = "1877b44e02382083e7477cdaa79f5048e06b48ea7e3c87feab91505d16801434"
   solver-name = "gps-cdcl"
   solver-version = 1
