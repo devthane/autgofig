@@ -5,10 +5,9 @@ import (
 	"os"
 	"io/ioutil"
 	"gopkg.in/yaml.v2"
-	"fmt"
 	"log"
-	"bufio"
 	"gopkg.in/AlecAivazis/survey.v1"
+	"os/exec"
 )
 
 type Loader struct {
@@ -65,7 +64,7 @@ func (l *Loader) configure(c *Config) {
 
 	mutatingRawConfig := *c
 
-	Clear()
+	clear()
 	for field, value := range mutatingRawConfig {
 		if value == "" {
 			prompt := &survey.Input{
@@ -101,17 +100,15 @@ func (l *Loader) writeRawConfig(m map[string]string) {
 	}
 }
 
-func (l *Loader) requestConf(field string) string {
-	r := bufio.NewReader(os.Stdin)
-	w := bufio.NewWriter(os.Stdout)
-	w.WriteString(fmt.Sprintf("%s> ", field))
-	w.Flush()
-
-	cr := byte('\n')
-	answer, err := r.ReadBytes(cr)
-	if err != nil {
-		log.Fatalln("Could not read input:", err)
+func clear() {
+	cmd := new(exec.Cmd)
+	if runtime.GOOS == "windows" {
+		cmd = exec.Command("cmd", "/c", "cls")
+	} else {
+		cmd = exec.Command("clear")
 	}
 
-	return string(answer[:len(answer)-1])
+	cmd.Stdout = os.Stdout
+	cmd.Run()
+	cmd.Wait()
 }
