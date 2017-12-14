@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"log"
 	"bufio"
-	"github.com/manifoldco/promptui"
+	"gopkg.in/AlecAivazis/survey.v1"
 )
 
 type Loader struct {
@@ -68,14 +68,12 @@ func (l *Loader) configure(c *Config) {
 	Clear()
 	for field, value := range mutatingRawConfig {
 		if value == "" {
-			prompt := promptui.Prompt{
-				Label: field,
+			prompt := &survey.Input{
+				Message: field + ":",
 			}
+			result := ""
 
-			result, err := prompt.Run()
-			if err != nil {
-				panic(err)
-			}
+			survey.AskOne(prompt, &result, nil)
 
 			mutatingRawConfig[field] = result
 		}
