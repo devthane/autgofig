@@ -2,30 +2,6 @@
 
 
 [[projects]]
-  branch = "master"
-  name = "github.com/chzyer/readline"
-  packages = ["."]
-  revision = "a4d5111b617813c5d09df1ba6d76394ed71b1644"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/juju/ansiterm"
-  packages = [".","tabwriter"]
-  revision = "35c59b9e0fe275705a71bf5d58ee293f27efbbc4"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/lunixbochs/vtclean"
-  packages = ["."]
-  revision = "d14193dfc626125c831501c1c42340b4248e1f5a"
-
-[[projects]]
-  branch = "windows-keycodes"
-  name = "github.com/manifoldco/promptui"
-  packages = [".","list","screenbuf"]
-  revision = "952bd7eaeed03711f45e8df4572fcda2dea8dd35"
-
-[[projects]]
   name = "github.com/mattn/go-colorable"
   packages = ["."]
   revision = "167de6bfdfba052fa6b2d3664c8f5272e23c9072"
@@ -39,9 +15,21 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/mgutz/ansi"
+  packages = ["."]
+  revision = "9520e82c474b0a04dd04f8a40959027271bab992"
+
+[[projects]]
+  branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
   revision = "8b4580aae2a0dd0c231a45d3ccb8434ff533b840"
+
+[[projects]]
+  name = "gopkg.in/AlecAivazis/survey.v1"
+  packages = [".","core","terminal"]
+  revision = "0aa8b6a162b391fe2d95648b7677d1d6ac2090a6"
+  version = "v1.4.1"
 
 [[projects]]
   branch = "v2"
@@ -52,6 +40,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "1877b44e02382083e7477cdaa79f5048e06b48ea7e3c87feab91505d16801434"
+  inputs-digest = "790a21721cbb7f8e87c053fb4a43e111020ee532e73da9c0bc464635b626dd6c"
   solver-name = "gps-cdcl"
   solver-version = 1
