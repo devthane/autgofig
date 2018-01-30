@@ -45,13 +45,13 @@ func NewLoader(configOut interface{}, projectName string) (*Loader, error) {
 	if runtime.GOOS == "windows" {
 		l.Separator = "\\"
 		l.HomeDir = os.Getenv("userprofile")
-		l.ConfLocation = l.HomeDir + l.Separator + l.name + ".yml"
+
 	} else {
 		l.Separator = "/"
 		l.HomeDir = os.Getenv("HOME")
-		l.ConfLocation = l.HomeDir + l.Separator + l.name + ".yml"
 	}
 
+	l.ConfLocation = l.HomeDir + l.Separator + "." + l.name + ".yml"
 	l.loadConfig()
 
 	return &l, nil
@@ -95,8 +95,9 @@ func (l *Loader) loadConfig() error {
 
 func (l *Loader) configure(config map[string]string) error {
 	var (
-		value interface{}
-		err   error
+		value  interface{}
+		err    error
+		exists bool
 	)
 
 	clear()
@@ -108,8 +109,11 @@ func (l *Loader) configure(config map[string]string) error {
 		fieldName := reflectedType.Field(i).Name
 
 		if fieldKind == reflect.Int {
-			if value, err = strconv.Atoi(config[fieldName]); err != nil {
-				panic(err)
+			value, exists = config[fieldName]
+			if !exists {
+				value = 0
+			} else if value, err = strconv.Atoi(config[fieldName]); err != nil {
+				return err
 			}
 		} else if fieldKind == reflect.String {
 			value = config[fieldName]
