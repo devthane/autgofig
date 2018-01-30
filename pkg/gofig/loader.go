@@ -20,6 +20,7 @@ type Loader struct {
 	fields       map[string]reflect.Kind
 	name         string
 	HomeDir      string
+	envVarsUsed  bool
 }
 
 // configOut must be a pointer to a struct containing the configuration fields, which must be exported fields.
@@ -96,7 +97,6 @@ func (l *Loader) loadConfig() error {
 		return err
 	}
 
-
 	return nil
 }
 
@@ -104,6 +104,7 @@ func (l *Loader) mergeConfigs(primary map[string]string, secondary map[string]st
 	results := make(map[string]string)
 	for fieldName := range l.fields {
 		if value, exists := primary[fieldName]; exists && value != "" {
+			l.envVarsUsed = true
 			results[fieldName] = value
 		} else if value, exists := secondary[fieldName]; exists && value != "" {
 			results[fieldName] = value
@@ -124,9 +125,10 @@ func (l *Loader) loadFromEnv() map[string]string {
 
 func (l *Loader) configure(config map[string]string) error {
 	var (
-		value  interface{}
-		err    error
-		exists bool
+		value        interface{}
+		err          error
+		exists       bool
+		outputConfig = make(map[string]string)
 	)
 
 	clear()
@@ -173,27 +175,39 @@ func (l *Loader) configure(config map[string]string) error {
 		} else {
 			reflectedConfig.Field(i).SetString(value.(string))
 		}
+
+		if !l.envVarsUsed {
+			outputConfig[fieldName] = value.(string)
+		}
+	}
+
+	if !l.envVarsUsed {
+		if err := l.writeRawConfig(outputConfig); err != nil {
+			return err
+		}
 	}
 
 	return nil
 }
 
-func (l *Loader) writeRawConfig(m map[string]string) {
+func (l *Loader) writeRawConfig(m map[string]string) error {
 	data, err := yaml.Marshal(m)
 	if err != nil {
-		log.Fatalln("ERR: Could not prepare Config for write.", err)
+		return err
 	}
 
 	file, err := os.Create(l.ConfLocation)
 	if err != nil {
-		log.Fatalln("ERR: could not open Config file for writing.", err)
+		return err
 	}
 	defer file.Close()
 
 	_, err = file.Write(data)
 	if err != nil {
-		log.Fatalln("ERR: Could not write to Config file.", err)
+		return err
 	}
+
+	return nil
 }
 
 func clear() {
