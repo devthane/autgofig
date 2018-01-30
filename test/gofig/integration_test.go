@@ -1,7 +1,7 @@
-package gofig_test
+package gofig
 
 import (
-	"github.com/thane421/gofig"
+	"github.com/thane421/gofig/pkg/gofig"
 	"testing"
 	"os"
 )
