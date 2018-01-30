@@ -31,6 +31,8 @@ func LoadConfig(configOut interface{}, projectName string) error {
 	return err
 }
 
+// Same as LoadConfig, except also returns the Loader, which contains useful OS specific variables.
+// Such as directory separators and the users home directory.
 func NewLoader(configOut interface{}, projectName string) (*Loader, error) {
 	var l Loader
 
