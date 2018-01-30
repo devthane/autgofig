@@ -14,10 +14,10 @@ func TestUnpackFields(t *testing.T) {
 	l := new(Loader)
 
 	l.unpackFields(new(TestObj))
-	if l.fields["StringField"] != reflect.TypeOf("") {
+	if l.fields["StringField"] != reflect.String {
 		t.Fail()
 	}
-	if l.fields["IntField"] != reflect.TypeOf(1) {
+	if l.fields["IntField"] != reflect.Int {
 		t.Fail()
 	}
 }
