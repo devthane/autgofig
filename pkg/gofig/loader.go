@@ -129,6 +129,7 @@ func (l *Loader) configure(config map[string]string) error {
 		err          error
 		exists       bool
 		outputConfig = make(map[string]string)
+		ok           bool
 	)
 
 	clear()
@@ -177,7 +178,9 @@ func (l *Loader) configure(config map[string]string) error {
 		}
 
 		if !l.envVarsUsed {
-			outputConfig[fieldName] = value.(string)
+			if outputConfig[fieldName], ok = value.(string); !ok {
+				outputConfig[fieldName] = strconv.Itoa(value.(int))
+			}
 		}
 	}
 
