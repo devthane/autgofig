@@ -17,7 +17,7 @@ type Loader struct {
 	ConfLocation string
 	Separator    string
 	Config       interface{}
-	fields       map[string]reflect.Type
+	fields       map[string]reflect.Kind
 	name         string
 	HomeDir      string
 }
@@ -26,11 +26,14 @@ type Loader struct {
 // the struct passed will receive the values either given by prompts, or found in the .yml file.
 // LoadConfig will set up a Loader, which will not be returned. Use NewLoader if you would like access to the Loader.
 // The yml file's name is determined by the projectName parameter, e.g. "~/" + "." + projectName + ".yml"
+// if any of the fields exist on the system as environment variables, they will be loaded as such over the yml config.
 func LoadConfig(configOut interface{}, projectName string) error {
 	_, err := NewLoader(configOut, projectName)
 	return err
 }
 
+// Same as LoadConfig, except also returns the Loader, which contains useful OS specific variables.
+// Such as directory separators and the users home directory.
 func NewLoader(configOut interface{}, projectName string) (*Loader, error) {
 	var l Loader
 
@@ -58,13 +61,13 @@ func NewLoader(configOut interface{}, projectName string) (*Loader, error) {
 }
 
 func (l *Loader) unpackFields(fields interface{}) {
-	var results = make(map[string]reflect.Type)
+	var results = make(map[string]reflect.Kind)
 
 	fieldsValue := reflect.ValueOf(fields).Elem()
 	fieldsType := fieldsValue.Type()
 
 	for i := 0; i < fieldsValue.NumField(); i++ {
-		results[fieldsType.Field(i).Name] = fieldsType.Field(i).Type
+		results[fieldsType.Field(i).Name] = fieldsType.Field(i).Type.Kind()
 	}
 
 	l.fields = results
@@ -82,15 +85,41 @@ func (l *Loader) loadConfig() error {
 		f.Close()
 	}
 
-	retrievedConfig := make(map[string]string)
-	if err = yaml.Unmarshal(data, retrievedConfig); err != nil {
-		return err
-	}
-	if err = l.configure(retrievedConfig); err != nil {
+	configFromEnv := l.loadFromEnv()
+	configFromFile := make(map[string]string)
+	if err = yaml.Unmarshal(data, configFromFile); err != nil {
 		return err
 	}
 
+	config := l.mergeConfigs(configFromEnv, configFromFile)
+	if err = l.configure(config); err != nil {
+		return err
+	}
+
+
 	return nil
+}
+
+func (l *Loader) mergeConfigs(primary map[string]string, secondary map[string]string) map[string]string {
+	results := make(map[string]string)
+	for fieldName := range l.fields {
+		if value, exists := primary[fieldName]; exists && value != "" {
+			results[fieldName] = value
+		} else if value, exists := secondary[fieldName]; exists && value != "" {
+			results[fieldName] = value
+		}
+	}
+
+	return results
+}
+
+func (l *Loader) loadFromEnv() map[string]string {
+	results := make(map[string]string)
+	for fieldName := range l.fields {
+		results[fieldName] = os.Getenv(fieldName)
+	}
+
+	return results
 }
 
 func (l *Loader) configure(config map[string]string) error {
