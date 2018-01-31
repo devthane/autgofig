@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/thane421/gofig/pkg/gofig"
+	"github.com/devthane/autgofig/pkg/autgofig"
 	"fmt"
 )
 
@@ -17,9 +17,8 @@ var Config *ExampleConfig
 
 func main() {
 	Config = new(ExampleConfig)
-	err := gofig.LoadConfig(Config, "example-project")
 
-	if err != nil {
+	if err := autgofig.LoadConfig(Config, "example-project"); err != nil {
 		panic(err)
 	}
 
@@ -30,8 +29,4 @@ func main() {
 		Config.DatabaseUser,
 		Config.DatabasePassword,
 	)
-
-	// In another package you could import the Config object and use it's values which should have been loaded
-	// 		from either ~/example-project.yml or from the prompts if that file did not exist.
-	//		And if the yml file did not exist, it will have been created with the values provided.
 }
