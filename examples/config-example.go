@@ -17,9 +17,8 @@ var Config *ExampleConfig
 
 func main() {
 	Config = new(ExampleConfig)
-	err := gofig.LoadConfig(Config, "example-project")
 
-	if err != nil {
+	if err := gofig.LoadConfig(Config, "example-project"); err != nil {
 		panic(err)
 	}
 
