@@ -1,7 +1,5 @@
 # autgofig
 
-[![GoDoc](https://godoc.org/github.com/devthane/autgofig?status.svg)](https://godoc.org/github.com/devthane/autgofig)
-
 ## Information
 
 Configuration library which only requires:
