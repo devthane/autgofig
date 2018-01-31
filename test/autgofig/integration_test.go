@@ -1,7 +1,7 @@
-package gofig
+package autgofig
 
 import (
-	"github.com/thane421/gofig/pkg/gofig"
+	"github.com/devthane/autgofig/pkg/autgofig"
 	"testing"
 	"os"
 	"runtime"
@@ -44,7 +44,7 @@ func TestIntegrationYaml(t *testing.T) {
 	defer os.Remove(ConfLocation)
 
 	config := new(TestObj)
-	gofig.LoadConfig(config, name)
+	autgofig.LoadConfig(config, name)
 
 	if config.StringField != "YamlTest" || config.IntField != 5 {
 		t.Fail()
@@ -57,7 +57,7 @@ func TestIntegrationEnv(t *testing.T) {
 	defer os.Clearenv()
 
 	config := new(TestObj)
-	gofig.LoadConfig(config, "config-env-test")
+	autgofig.LoadConfig(config, "config-env-test")
 
 	if config.StringField != "EnvTest" || config.IntField != 10 {
 		t.Fail()
@@ -98,7 +98,7 @@ func TestIntegrationPriority(t *testing.T) {
 	defer os.Remove(ConfLocation)
 
 	config := new(TestObj)
-	gofig.LoadConfig(config, name)
+	autgofig.LoadConfig(config, name)
 
 	if config.StringField != "PriorityTest" || config.IntField != 5 {
 		t.Fail()

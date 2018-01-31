@@ -24,34 +24,34 @@ If any matching environment variables are found, the .yml file will not be writt
 package main
 
 import (
-	"github.com/thane421/gofig/pkg/gofig"
+	"github.com/devthane/autgofig/pkg/autgofig"
 	"fmt"
 )
 
 type ExampleConfig struct {
-    DatabaseName        string
-    DatabaseHost        string
-    DatabasePort        int
-    DatabaseUser        string
-    DatabasePassword    string
+	DatabaseName     string
+	DatabaseHost     string
+	DatabasePort     int
+	DatabaseUser     string
+	DatabasePassword string
 }
 
 var Config *ExampleConfig
 
 func main() {
-    Config = new(ExampleConfig)
-    
-    if err := gofig.LoadConfig(Config, "example-project"); err != nil {
-        panic(err)
-    }
-    
-    fmt.Println(
-        Config.DatabaseName,
-        Config.DatabaseHost,
-        Config.DatabasePort,
-        Config.DatabaseUser,
-        Config.DatabasePassword,
-    )
+	Config = new(ExampleConfig)
+
+	if err := autgofig.LoadConfig(Config, "example-project"); err != nil {
+		panic(err)
+	}
+
+	fmt.Println(
+		Config.DatabaseName,
+		Config.DatabaseHost,
+		Config.DatabasePort,
+		Config.DatabaseUser,
+		Config.DatabasePassword,
+	)
 }
 ```
 

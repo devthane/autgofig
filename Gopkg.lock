@@ -20,14 +20,24 @@
   revision = "9520e82c474b0a04dd04f8a40959027271bab992"
 
 [[projects]]
+  name = "github.com/thane421/gofig"
+  packages = ["pkg/gofig"]
+  revision = "b9859a9c91d887ff1a4279b9739fce131ee379ff"
+  version = "v0.4.0"
+
+[[projects]]
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "8b4580aae2a0dd0c231a45d3ccb8434ff533b840"
+  revision = "3dbebcf8efb6a5011a60c2b4591c1022a759af8a"
 
 [[projects]]
   name = "gopkg.in/AlecAivazis/survey.v1"
-  packages = [".","core","terminal"]
+  packages = [
+    ".",
+    "core",
+    "terminal"
+  ]
   revision = "0aa8b6a162b391fe2d95648b7677d1d6ac2090a6"
   version = "v1.4.1"
 
@@ -35,11 +45,11 @@
   branch = "v2"
   name = "gopkg.in/yaml.v2"
   packages = ["."]
-  revision = "287cf08546ab5e7e37d55a84f7ed3fd1db036de5"
+  revision = "d670f9405373e636a5a2765eea47fac0c9bc91a4"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "790a21721cbb7f8e87c053fb4a43e111020ee532e73da9c0bc464635b626dd6c"
+  inputs-digest = "cafb4f4b21ddb5f0f3a7c1cbb323602f39ab4c0ac8c94a206eeecdbd0c2b3de1"
   solver-name = "gps-cdcl"
   solver-version = 1
